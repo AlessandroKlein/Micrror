@@ -46,7 +46,7 @@ class TelegramDownloadHelper(DownloadHelper):
 
     def __onDownloadProgress(self, current, total):
         if self.__is_cancelled:
-            self.__onDownloadError('Cancelled by user!')
+            self.__onDownloadError('Cancelado por el usuario!')
             self._bot.stop_transmission()
             return
         with self.__resource_lock:
@@ -79,7 +79,7 @@ class TelegramDownloadHelper(DownloadHelper):
             self.__onDownloadComplete()
         else:
             if not self.__is_cancelled:
-                self.__onDownloadError('Internal error occurred')
+                self.__onDownloadError('Se produjo un error interno')
 
     def add_download(self, message, path, filename):
         _message = self._bot.get_messages(message.chat.id, reply_to_message_ids=message.message_id)
@@ -101,7 +101,7 @@ class TelegramDownloadHelper(DownloadHelper):
             
             if download:
                 if STOP_DUPLICATE:
-                    LOGGER.info(f"Checking File/Folder if already in Drive...")
+                    LOGGER.info(f"Comprobación de archivo/carpeta si ya está en Drive...")
                     if self.__listener.isTar:
                         name = name + ".tar"
                     if self.__listener.extract:           
@@ -110,17 +110,17 @@ class TelegramDownloadHelper(DownloadHelper):
                         gd = GoogleDriveHelper()
                         smsg, button = gd.drive_list(name)
                     if smsg:
-                        sendMarkup("File/Folder is already available in Drive.\nHere are the search results:", self.__listener.bot, self.__listener.update, button)
+                        sendMarkup("El archivo/carpeta ya está disponible en Drive.\nAquí están los resultados de la búsqueda:", self.__listener.bot, self.__listener.update, button)
                         return
                 sendStatusMessage(self.__listener.update, self.__listener.bot)
                 self.__onDownloadStart(name, media.file_size, media.file_id)
-                LOGGER.info(f'Downloading Telegram file with id: {media.file_id}')
+                LOGGER.info(f'Descargando archivo de Telegram con id: {media.file_id}')
                 threading.Thread(target=self.__download, args=(_message, path)).start()
             else:
-                self.__onDownloadError('File already being downloaded!')
+                self.__onDownloadError('El archivo ya se está descargando!')
         else:
-            self.__onDownloadError('No document in the replied message')
+            self.__onDownloadError('Ningún documento en el mensaje de respuesta')
 
     def cancel_download(self):
-        LOGGER.info(f'Cancelling download on user request: {self.gid}')
+        LOGGER.info(f'Cancelación de la descarga a petición del usuario: {self.gid}')
         self.__is_cancelled = True
