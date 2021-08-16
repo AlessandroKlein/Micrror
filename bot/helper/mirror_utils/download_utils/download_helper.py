@@ -4,7 +4,7 @@ import threading
 
 class MethodNotImplementedError(NotImplementedError):
     def __init__(self):
-        super(self, 'Not implemented method')
+        super(self, 'Método no implementado')
 
 
 class DownloadHelper:
