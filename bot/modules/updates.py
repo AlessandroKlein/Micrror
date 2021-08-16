@@ -25,12 +25,12 @@ BRANCH_ = UPSTREAM_BRANCH
 
 @app.on_message(filters.command([BotCommands.UpdateCommand, f'{BotCommands.UpdateCommand}@{bot.username}']) & filters.user(OWNER_ID))
 async def update_it(client, message):
-    msg_ = await message.reply_text("`Updating Please Wait!`")
+    msg_ = await message.reply_text("`Actualizando por favor espere!`")
     try:
         repo = Repo()
     except GitCommandError:
         return await msg_.edit(
-            "**Invalid Git Command. Please Report This Bug To [Support Group](https://t.me/SlamMirrorSupport)**"
+            "**Comando de Git no válido. Informe este error a [Support Group](https://t.me/SlamMirrorSupport)**"
         )
     except InvalidGitRepositoryError:
         repo = Repo.init()
@@ -44,7 +44,7 @@ async def update_it(client, message):
         repo.heads.master.checkout(True)
     if repo.active_branch.name != UPSTREAM_BRANCH:
         return await msg_.edit(
-            f"`Seems Like You Are Using Custom Branch - {repo.active_branch.name}! Please Switch To {UPSTREAM_BRANCH} To Make This Updater Function!`"
+            f"`Parece que está utilizando una rama personalizada - {repo.active_branch.name}! Cambie a {UPSTREAM_BRANCH} Para hacer que esta función de actualización!`"
         )
     try:
         repo.create_remote("upstream", REPO_)
@@ -58,7 +58,7 @@ async def update_it(client, message):
         except GitCommandError:
             repo.git.reset("--hard", "FETCH_HEAD")
         subprocess.run(["pip3",  "install", "--no-cache-dir", "-r",  "requirements.txt"])
-        await msg_.edit("`Updated Sucessfully! Give Me Some Time To Restart!`")
+        await msg_.edit("`Actualizado con éxito! Dame algo de tiempo para reiniciar!`")
         with open("./aria.sh", 'rb') as file:
             script = file.read()
         subprocess.call("./aria.sh", shell=True)
@@ -67,7 +67,7 @@ async def update_it(client, message):
         exit()
         return
     else:
-        await msg_.edit("`Heroku Detected! Pushing, Please wait!`")
+        await msg_.edit("`Heroku detectado! Empujando, por favor espere!`")
         ups_rem.fetch(UPSTREAM_BRANCH)
         repo.git.reset("--hard", "FETCH_HEAD")
         if "heroku" in repo.remotes:
@@ -80,4 +80,4 @@ async def update_it(client, message):
         except BaseException as error:
             await msg_.edit(f"**Updater Error** \nTraceBack : `{error}`")
             return repo.__del__()
-        await msg_.edit(f"`Updated Sucessfully! \n\nCheck your config with` `/{BotCommands.ConfigMenuCommand}`")
+        await msg_.edit(f"`Actualizado con éxito! \n\nVerifique su configuración con` `/{BotCommands.ConfigMenuCommand}`")
