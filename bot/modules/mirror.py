@@ -75,13 +75,13 @@ class MirrorListener(listeners.MirrorListeners):
                     download_dict[self.uid] = TarStatus(name, m_path, size)
                 path = fs_utils.tar(m_path)
             except FileNotFoundError:
-                LOGGER.info('File to archive not found!')
-                self.onUploadError('Internal error occurred!!')
+                LOGGER.info('Archivo a archivar no encontrado!')
+                self.onUploadError('Se produjo un error interno!!')
                 return
         elif self.extract:
             try:
                 path = fs_utils.get_base_name(m_path)
-                LOGGER.info(f"Extracting: {name}")
+                LOGGER.info(f"Extrayendo: {name}")
                 with download_dict_lock:
                     download_dict[self.uid] = ExtractStatus(name, m_path, size)
                 pswd = self.pswd
@@ -91,20 +91,20 @@ class MirrorListener(listeners.MirrorListeners):
                     archive_result = subprocess.run(["extract", m_path])
                 if archive_result.returncode == 0:
                     threading.Thread(target=os.remove, args=(m_path,)).start()
-                    LOGGER.info(f"Deleting archive: {m_path}")
+                    LOGGER.info(f"Eliminando archivo: {m_path}")
                 else:
-                    LOGGER.warning('Unable to extract archive! Uploading anyway')
+                    LOGGER.warning('¡No se puede extraer el archivo! Subiendo de todos modos')
                     path = f'{DOWNLOAD_DIR}{self.uid}/{name}'
                 LOGGER.info(f'got path: {path}')
 
             except NotSupportedExtractionArchive:
-                LOGGER.info("Not any valid archive, uploading file as it is.")
+                LOGGER.info("No es ningún archivo válido, subiendo el archivo tal como está.")
                 path = f'{DOWNLOAD_DIR}{self.uid}/{name}'
         else:
             path = f'{DOWNLOAD_DIR}{self.uid}/{name}'
         up_name = pathlib.PurePath(path).name
         up_path = f'{DOWNLOAD_DIR}{self.uid}/{up_name}'
-        LOGGER.info(f"Upload Name: {up_name}")
+        LOGGER.info(f"Cargar nombre: {up_name}")
         drive = gdriveTools.GoogleDriveHelper(up_name, self)
         size = fs_utils.get_path_size(up_path)
         upload_status = UploadStatus(drive, size, gid, self)
@@ -129,7 +129,7 @@ class MirrorListener(listeners.MirrorListeners):
             uname = f"@{self.message.from_user.username}"
         else:
             uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
-        msg = f"{uname} your download has been stopped due to: {error}"
+        msg = f"{uname} su descarga se ha detenido debido a: {error}"
         sendMessage(msg, self.bot, self.update)
         if count == 0:
             self.clean()
@@ -144,20 +144,20 @@ class MirrorListener(listeners.MirrorListeners):
 
     def onUploadComplete(self, link: str, size, files, folders, typ):
         with download_dict_lock:
-            msg = f'<b>Filename: </b><code>{download_dict[self.uid].name()}</code>\n<b>Size: </b><code>{size}</code>'
+            msg = f'<b>Nombre del archivo: </b><code>{download_dict[self.uid].name()}</code>\n<b>Tamaño: </b><code>{size}</code>'
             if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
-                msg += '\n<b>Type: </b><code>Folder</code>'
-                msg += f'\n<b>SubFolders: </b><code>{folders}</code>'
-                msg += f'\n<b>Files: </b><code>{files}</code>'
+                msg += '\n<b>Tipo: </b><code>Folder</code>'
+                msg += f'\n<b>Subcarpetas: </b><code>{folders}</code>'
+                msg += f'\n<b>Archivos: </b><code>{files}</code>'
             else:
-                msg += f'\n<b>Type: </b><code>{typ}</code>'
+                msg += f'\n<b>Tipo: </b><code>{typ}</code>'
             buttons = button_build.ButtonMaker()
             if SHORTENER is not None and SHORTENER_API is not None:
                 surl = requests.get(f'https://{SHORTENER}/api?api={SHORTENER_API}&url={link}&format=text').text
                 buttons.buildbutton("☁️ Drive Link", surl)
             else:
                 buttons.buildbutton("☁️ Drive Link", link)
-            LOGGER.info(f'Done Uploading {download_dict[self.uid].name()}')
+            LOGGER.info(f'Terminado de cargar {download_dict[self.uid].name()}')
             if INDEX_URL is not None:
                 url_path = requests.utils.quote(f'{download_dict[self.uid].name()}')
                 share_url = f'{INDEX_URL}/{url_path}'
@@ -175,11 +175,11 @@ class MirrorListener(listeners.MirrorListeners):
                         siurls = requests.get(f'https://{SHORTENER}/api?api={SHORTENER_API}&url={share_urls}&format=text').text
                         buttons.buildbutton("⚡ Index Link", siurl)
                         if VIEW_LINK:
-                            buttons.buildbutton("🌐 View Link", siurls)
+                            buttons.buildbutton("🌐 Link Vista", siurls)
                     else:
                         buttons.buildbutton("⚡ Index Link", share_url)
                         if VIEW_LINK:
-                            buttons.buildbutton("🌐 View Link", share_urls)
+                            buttons.buildbutton("🌐 Link Vista", share_urls)
             if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
                 buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
             if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
@@ -308,7 +308,7 @@ def _mirror(bot, update, isTar=False, extract=False):
 
     if bot_utils.is_gdrive_link(link):
         if not isTar and not extract:
-            sendMessage(f"Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\nUse /{BotCommands.TarMirrorCommand} to make tar of Google Drive folder\nUse /{BotCommands.UnzipMirrorCommand} to extracts archive Google Drive file", bot, update)
+            sendMessage(f"Utiliza /{BotCommands.CloneCommand} para clonar archivo / carpeta de Google Drive\nUtiliza /{BotCommands.TarMirrorCommand} para hacer alquitrán de la carpeta de Google Drive\nUtiliza /{BotCommands.UnzipMirrorCommand} to extracts archive Google Drive file", bot, update)
             return
         res, size, name, files = gdriveTools.GoogleDriveHelper().clonehelper(link)
         if res != "":
@@ -319,7 +319,7 @@ def _mirror(bot, update, isTar=False, extract=False):
             limit = TAR_UNZIP_LIMIT
             limit = limit.split(' ', maxsplit=1)
             limitint = int(limit[0])
-            msg = f'Failed, Tar/Unzip limit is {TAR_UNZIP_LIMIT}.\nYour File/Folder size is {get_readable_file_size(size)}.'
+            msg = f'Error, el límite de alquitrán / descomprimir es {TAR_UNZIP_LIMIT}.\nEl tamaño de su archivo / carpeta es {get_readable_file_size(size)}.'
             if 'G' in limit[1] or 'g' in limit[1]:
                 if size > limitint * 1024**3:
                     sendMessage(msg, listener.bot, listener.update)
@@ -340,9 +340,9 @@ def _mirror(bot, update, isTar=False, extract=False):
     elif bot_utils.is_mega_link(link):
         link_type = get_mega_link_type(link)
         if link_type == "folder" and BLOCK_MEGA_FOLDER:
-            sendMessage("Mega folder are blocked!", bot, update)
+            sendMessage("Las megacarpetas están bloqueadas!", bot, update)
         elif BLOCK_MEGA_LINKS:
-            sendMessage("Mega links are blocked!", bot, update)
+            sendMessage("Los mega enlaces están bloqueados!", bot, update)
         else:
             mega_dl = MegaDownloadHelper()
             mega_dl.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/', listener)
