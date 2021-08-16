@@ -305,7 +305,6 @@ RESULT_STR_ALL = (
 
 torrents_dict = {
     '1337x': {'source': "https://slam-api.herokuapp.com/api/1337x/", 'result_str': RESULT_STR_1337},
-    'torrentgalaxy ': {'source': "https://slam-api.herokuapp.com/api/torrentgalaxy/", 'result_str': RESULT_STR_TORRENTGALAXY},
     'piratebay': {'source': "https://slam-api.herokuapp.com/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
     'tgx': {'source': "https://slam-api.herokuapp.com/api/tgx/", 'result_str': RESULT_STR_TGX},
     'yts': {'source': "https://slam-api.herokuapp.com/api/yts/", 'result_str': RESULT_STR_YTS},
