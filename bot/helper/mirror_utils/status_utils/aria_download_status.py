@@ -84,14 +84,14 @@ class AriaDownloadStatus(Status):
         return self.__gid
 
     def cancel_download(self):
-        LOGGER.info(f"Cancelling Download: {self.name()}")
+        LOGGER.info(f"Cancelar descarga: {self.name()}")
         download = self.aria_download()
         if download.is_waiting:
-            self.__listener.onDownloadError("Cancelled by user")
+            self.__listener.onDownloadError("Cancelado por el usuario")
             aria2.remove([download], force=True)
             return
         if len(download.followed_by_ids) != 0:
             downloads = aria2.get_downloads(download.followed_by_ids)
             aria2.remove(downloads, force=True)
-        self.__listener.onDownloadError('Download stopped by user!')
+        self.__listener.onDownloadError('Descarga detenida por el usuario!')
         aria2.remove([download], force=True)
