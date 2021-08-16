@@ -32,14 +32,14 @@ def check_heroku(func):
     async def heroku_cli(client, message):
         heroku_app = None
         if not heroku_client:
-            await message.reply_text("`Please Add HEROKU_API_KEY Key For This To Function To Work!`", parse_mode="markdown")
+            await message.reply_text("`Agregue la clave HEROKU_API_KEY para que esta función funcione!`", parse_mode="markdown")
         elif not HEROKU_APP_NAME:
-            await message.reply_text("`Please Add HEROKU_APP_NAME For This To Function To Work!`", parse_mode="markdown")
+            await message.reply_text("`Agregue HEROKU_APP_NAME para que esto funcione!`", parse_mode="markdown")
         if HEROKU_APP_NAME and heroku_client:
             try:
                 heroku_app = heroku_client.app(HEROKU_APP_NAME)
             except:
-                await message.reply_text(message, "`Heroku Api Key And App Name Doesn't Match!`", parse_mode="markdown")
+                await message.reply_text(message, "`La clave de Heroku Api y el nombre de la aplicación no coinciden!`", parse_mode="markdown")
             if heroku_app:
                 await func(client, message, heroku_app)
 
