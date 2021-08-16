@@ -90,9 +90,9 @@ async def nyaa_search_sukebei(client, message):
 async def init_search(client, message, query, sukebei):
     result, pages, ttl = await return_search(query, sukebei=sukebei)
     if not result:
-        await message.reply_text('No results found')
+        await message.reply_text('No se han encontrado resultados')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Next', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Próximo', 'nyaa_next')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
@@ -126,15 +126,15 @@ async def nyaa_callback(client, callback_query):
             current_page = pages
         ttl_ended = (time.time() - ttl) > 3600
         if ttl_ended:
-            text = getattr(message.text, 'html', 'Search expired')
+            text = getattr(message.text, 'html', 'Búsqueda caducada')
         else:
             if callback_query.from_user.id != user_id:
                 await callback_query.answer('...no', cache_time=3600)
                 return
             text, pages, ttl = await return_search(query, current_page, sukebei)
-        buttons = [InlineKeyboardButton(f'Prev', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Next', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'Anterior', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Próximo', 'nyaa_next')]
         if ttl_ended:
-            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
+            buttons = [InlineKeyboardButton('Búsqueda caducada', 'nyaa_nop')]
         else:
             if current_page == 1:
                 buttons.pop(0)
@@ -196,9 +196,9 @@ class TorrentSearch:
         return string
 
     async def update_message(self):
-        prevBtn = InlineKeyboardButton(f"Prev", callback_data=f"{self.command}_previous")
+        prevBtn = InlineKeyboardButton(f"Anterior", callback_data=f"{self.command}_previous")
         delBtn = InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data=f"{self.command}_delete")
-        nextBtn = InlineKeyboardButton(f"Next", callback_data=f"{self.command}_next")
+        nextBtn = InlineKeyboardButton(f"Próximo", callback_data=f"{self.command}_next")
 
         inline = []
         if (self.index != 0):
@@ -222,7 +222,7 @@ class TorrentSearch:
 
     async def find(self, client, message):
         if len(message.command) < 2:
-            await message.reply_text(f"Usage: /{self.command} query")
+            await message.reply_text(f"Usa: /{self.command} consulta")
             return
 
         query = urlencode(message.text.split(None, 1)[1])
@@ -238,7 +238,7 @@ class TorrentSearch:
                     self.response = result
                     self.response_range = range(0, len(self.response), self.RESULT_LIMIT)
         except:
-            await self.message.edit("No Results Found.")
+            await self.message.edit("No se han encontrado resultados.")
             return
         await self.update_message()
 
@@ -259,52 +259,53 @@ class TorrentSearch:
         await self.update_message()
 
 RESULT_STR_1337 = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Nombre: `{Name}`\n"
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders} || ➲Leechers: {Leechers}"
 )
 RESULT_STR_PIRATEBAY = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Nombre: `{Name}`\n"
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders} || ➲Leechers: {Leechers}"
 )
 RESULT_STR_TGX = (
-    "➲Name: `{Name}`\n" 
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Nombre: `{Name}`\n" 
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders} || ➲Leechers: {Leechers}"
 )
 RESULT_STR_YTS = (
-    "➲Name: `{Name}`\n"
-    "➲Released on: {ReleasedDate}\n"
-    "➲Genre: {Genre}\n"
-    "➲Rating: {Rating}\n"
+    "➲Nombre: `{Name}`\n"
+    "➲Publicado el: {ReleasedDate}\n"
+    "➲Género: {Genre}\n"
+    "➲Clasificación: {Rating}\n"
     "➲Likes: {Likes}\n"
-    "➲Duration: {Runtime}\n"
-    "➲Language: {Language}"
+    "➲Duración: {Runtime}\n"
+    "➲Idioma: {Language}"
 )
 RESULT_STR_EZTV = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders}"
+    "➲Nombre: `{Name}`\n"
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders}"
 )
 RESULT_STR_TORLOCK = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Nombre: `{Name}`\n"
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders} || ➲Leechers: {Leechers}"
 )
 RESULT_STR_RARBG = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Nombre: `{Name}`\n"
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders} || ➲Leechers: {Leechers}"
 )
 RESULT_STR_ALL = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Nombre: `{Name}`\n"
+    "➲Tamaño: {Size}\n"
+    "➲Sembradoras: {Seeders} || ➲Leechers: {Leechers}"
 )
 
 torrents_dict = {
     '1337x': {'source': "https://slam-api.herokuapp.com/api/1337x/", 'result_str': RESULT_STR_1337},
+    'torrentgalaxy ': {'source': "https://slam-api.herokuapp.com/api/torrentgalaxy/", 'result_str': RESULT_STR_TORRENTGALAXY},
     'piratebay': {'source': "https://slam-api.herokuapp.com/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
     'tgx': {'source': "https://slam-api.herokuapp.com/api/tgx/", 'result_str': RESULT_STR_TGX},
     'yts': {'source': "https://slam-api.herokuapp.com/api/yts/", 'result_str': RESULT_STR_YTS},
@@ -320,17 +321,17 @@ for command, value in torrents_dict.items():
 
 def searchhelp(update, context):
     help_string = '''
-<b>Torrent Search</b>
-• /nyaasi <i>[search query]</i>
-• /sukebei <i>[search query]</i>
-• /1337x <i>[search query]</i>
-• /piratebay <i>[search query]</i>
-• /tgx <i>[search query]</i>
-• /yts <i>[search query]</i>
-• /eztv <i>[search query]</i>
-• /torlock <i>[search query]</i>
-• /rarbg <i>[search query]</i>
-• /ts <i>[search query]</i>
+<b>Búsqueda de torrents</b>
+• /nyaasi <i>[consulta de busqueda]</i>
+• /sukebei <i>[consulta de busqueda]</i>
+• /1337x <i>[consulta de busqueda]</i>
+• /piratebay <i>[consulta de busqueda]</i>
+• /tgx <i>[consulta de busqueda]</i>
+• /yts <i>[consulta de busqueda]</i>
+• /eztv <i>[consulta de busqueda]</i>
+• /torlock <i>[consulta de busqueda]</i>
+• /rarbg <i>[consulta de busqueda]</i>
+• /ts <i>[consulta de busqueda]</i>
 '''
     sendMessage(help_string, context.bot, update)
     
