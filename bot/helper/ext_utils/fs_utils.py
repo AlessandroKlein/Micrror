@@ -10,7 +10,7 @@ from .exceptions import NotSupportedExtractionArchive
 
 def clean_download(path: str):
     if os.path.exists(path):
-        LOGGER.info(f"Cleaning download: {path}")
+        LOGGER.info(f"Descarga de limpieza: {path}")
         shutil.rmtree(path)
 
 
@@ -32,11 +32,11 @@ def clean_all():
 
 def exit_clean_up(signal, frame):
     try:
-        LOGGER.info("Please wait, while we clean up the downloads and stop running downloads")
+        LOGGER.info("Espere, mientras limpiamos las descargas y dejamos de ejecutar descargas.")
         clean_all()
         sys.exit(0)
     except KeyboardInterrupt:
-        LOGGER.warning("Force Exiting before the cleanup finishes!")
+        LOGGER.warning("Forzar la salida antes de que finalice la limpieza!")
         sys.exit(1)
 
 
@@ -137,7 +137,7 @@ def get_base_name(orig_path: str):
     elif orig_path.endswith(".xar"):
         return orig_path.replace(".xar", "")
     else:
-        raise NotSupportedExtractionArchive('File format not supported for extraction')
+        raise NotSupportedExtractionArchive('El formato de archivo no es compatible con la extracción')
 
 
 def get_mime_type(file_path):
