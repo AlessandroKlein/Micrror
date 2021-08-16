@@ -22,9 +22,9 @@ def authorize(update, context):
                 with open('authorized_chats.txt', 'a') as file:
                     file.write(f'{user_id}\n')
                     AUTHORIZED_CHATS.add(user_id)
-                    msg = 'User Authorized'
+                    msg = 'Usuario autorizado'
         else:
-            msg = 'User Already Authorized'
+            msg = 'Usuario ya autorizado'
     else:
         if reply_message is None:
             # Trying to authorize a chat
@@ -36,7 +36,7 @@ def authorize(update, context):
                     with open('authorized_chats.txt', 'a') as file:
                         file.write(f'{chat_id}\n')
                         AUTHORIZED_CHATS.add(chat_id)
-                        msg = 'Chat Authorized'
+                        msg = 'Chat autorizado'
             else:
                 msg = 'Chat Already Authorized'
 
@@ -50,9 +50,9 @@ def authorize(update, context):
                     with open('authorized_chats.txt', 'a') as file:
                         file.write(f'{user_id}\n')
                         AUTHORIZED_CHATS.add(user_id)
-                        msg = 'User Authorized'
+                        msg = 'Usuario autorizado'
             else:
-                msg = 'User Already Authorized'
+                msg = 'Usuario ya autorizado'
     sendMessage(msg, context.bot, update)
 
 
@@ -68,9 +68,9 @@ def unauthorize(update, context):
                 msg = DbManger().db_unauth(user_id)
             else:
                 AUTHORIZED_CHATS.remove(user_id)
-                msg = 'User Unauthorized'
+                msg = 'Usuario no autorizado'
         else:
-            msg = 'User Already Unauthorized'
+            msg = 'Usuario ya no autorizado'
     else:
         if reply_message is None:
             # Trying to unauthorize a chat
@@ -80,9 +80,9 @@ def unauthorize(update, context):
                     msg = DbManger().db_unauth(chat_id)
                 else:
                     AUTHORIZED_CHATS.remove(chat_id)
-                    msg = 'Chat Unauthorized'
+                    msg = 'Chat no autorizado'
             else:
-                msg = 'Chat Already Unauthorized'
+                msg = 'Chat ya no autorizado'
         else:
             # Trying to authorize someone by replying
             user_id = reply_message.from_user.id
@@ -91,9 +91,9 @@ def unauthorize(update, context):
                     msg = DbManger().db_unauth(user_id)
                 else:
                     AUTHORIZED_CHATS.remove(user_id)
-                    msg = 'User Unauthorized'
+                    msg = 'Usuario no autorizado'
             else:
-                msg = 'User Already Unauthorized'
+                msg = 'Usuario ya no autorizado'
     with open('authorized_chats.txt', 'a') as file:
         file.truncate(0)
         for i in AUTHORIZED_CHATS:
@@ -115,12 +115,12 @@ def addSudo(update, context):
                 with open('sudo_users.txt', 'a') as file:
                     file.write(f'{user_id}\n')
                     SUDO_USERS.add(user_id)
-                    msg = 'Promoted as Sudo'
+                    msg = 'Promovido como Sudo'
         else:
-            msg = 'Already Sudo'
+            msg = 'Ya Sudo'
     else:
         if reply_message is None:
-            msg = "Give ID or Reply To message of whom you want to Promote"
+            msg = "Dar ID o responder al mensaje de quién desea promocionar"
         else:
             # Trying to authorize someone by replying
             user_id = reply_message.from_user.id
@@ -131,7 +131,7 @@ def addSudo(update, context):
                     with open('sudo_users.txt', 'a') as file:
                         file.write(f'{user_id}\n')
                         SUDO_USERS.add(user_id)
-                        msg = 'Promoted as Sudo'
+                        msg = 'Promovido como Sudo'
             else:
                 msg = 'Already Sudo'
     sendMessage(msg, context.bot, update)
@@ -149,12 +149,12 @@ def removeSudo(update, context):
                 msg = DbManger().db_rmsudo(user_id)
             else:
                 SUDO_USERS.remove(user_id)
-                msg = 'Demoted'
+                msg = 'Degradado'
         else:
-            msg = 'Not a Sudo'
+            msg = 'No es un sudo'
     else:
         if reply_message is None:
-            msg = "Give ID or Reply To message of whom you want to remove from Sudo"
+            msg = "Dar ID o Responder al mensaje de quién desea eliminar de Sudo"
         else:
             user_id = reply_message.from_user.id
             if user_id in SUDO_USERS:
@@ -162,9 +162,9 @@ def removeSudo(update, context):
                     msg = DbManger().db_rmsudo(user_id)
                 else:
                     SUDO_USERS.remove(user_id)
-                    msg = 'Demoted'
+                    msg = 'Degradado'
             else:
-                msg = 'Not a Sudo'
+                msg = 'No es un sudo'
     if DB_URI is None:
         with open('sudo_users.txt', 'a') as file:
             file.truncate(0)
@@ -177,7 +177,7 @@ def sendAuthChats(update, context):
     user = sudo = ''
     user += '\n'.join(str(id) for id in AUTHORIZED_CHATS)
     sudo += '\n'.join(str(id) for id in SUDO_USERS)
-    sendMessage(f'<b><u>Authorized Chats</u></b>\n<code>{user}</code>\n<b><u>Sudo Users</u></b>\n<code>{sudo}</code>', context.bot, update)
+    sendMessage(f'<b><u>Chats autorizados</u></b>\n<code>{user}</code>\n<b><u>Usuarios de sudo</u></b>\n<code>{sudo}</code>', context.bot, update)
 
 
 send_auth_handler = CommandHandler(command=BotCommands.AuthorizedUsersCommand, callback=sendAuthChats,
