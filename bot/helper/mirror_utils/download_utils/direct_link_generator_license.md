@@ -1,82 +1,81 @@
-                        RAPHIELSCAPE PUBLIC LICENSE 
-                          Version 1.c, June 2019 
+                          LICENCIA PÚBLICA DE RAPHIELSCAPE
+                           Versión 1.c, junio de 2021
 
- Copyright (C) 2019 Raphielscape LLC.
- Copyright (C) 2019 Devscapes Open Source Holding GmbH.
+  Copyright (C) 2021 Raphielscape LLC.
+  Copyright (C) 2021 Devscapes Open Source Holding GmbH.
 
-  Everyone is permitted to copy and distribute verbatim or modified 
- copies of this license document, and changing it is allowed as long 
- as the name is changed. 
+   Todo el mundo está autorizado a copiar y distribuir textualmente o modificado
+  copias de este documento de licencia, y se permite cambiarlo siempre que
+  a medida que se cambia el nombre.
+                       LICENCIA PÚBLICA DE RAPHIELSCAPE
+                            A-1. DEFINICIONES
 
-                        RAPHIELSCAPE PUBLIC LICENSE 
-                            A-1. DEFINITIONS
+0. “Esta Licencia” se refiere a la versión 1.c de la Licencia Pública Raphielscape.
 
-0. “This License” refers to version 1.c of the Raphielscape Public License.
+1. “Copyright” también significa leyes similares a los derechos de autor que se aplican a otros tipos de obras.
 
-1. “Copyright” also means copyright-like laws that apply to other kinds of works.
+2. "El Trabajo" se refiere a cualquier trabajo protegido por derechos de autor bajo esta Licencia. Cada titular de la licencia se denomina "usted".
+   Los “licenciatarios” y los “destinatarios” pueden ser personas u organizaciones.
 
-2. “The Work" refers to any copyrightable work licensed under this License. Each licensee is addressed as “you”. 
-   “Licensees” and “recipients” may be individuals or organizations.
+3. “Modificar” un trabajo significa copiar o adaptar todo o parte del trabajo de una manera que requiera permiso de derechos de autor,
+   que no sea la realización de una copia exacta. El trabajo resultante se denomina "versión modificada" del trabajo anterior.
+   o un trabajo "basado en" el trabajo anterior.
 
-3. To “modify” a work means to copy from or adapt all or part of the work in a fashion requiring copyright permission, 
-   other than the making of an exact copy. The resulting work is called a “modified version” of the earlier work 
-   or a work “based on” the earlier work.
+4. Formulario de origen. La "forma fuente" de un trabajo significa la forma preferida del trabajo para realizar modificaciones.
+   “Código de objeto” significa cualquier forma no fuente de una obra.
 
-4. Source Form. The “source form” for a work means the preferred form of the work for making modifications to it. 
-   “Object code” means any non-source form of a work.
+  La "Fuente correspondiente" para un trabajo en forma de código objeto significa todo el código fuente necesario para generar, instalar y
+  (para un trabajo ejecutable) ejecutar el código del objeto y modificar el trabajo, incluidos los scripts para controlar esas actividades.
 
-  The “Corresponding Source” for a work in object code form means all the source code needed to generate, install, and 
-  (for an executable work) run the object code and to modify the work, including scripts to control those activities.
+  La Fuente correspondiente no necesita incluir nada que los usuarios puedan regenerar automáticamente desde otras partes de la Fuente correspondiente.
+  La fuente correspondiente para un trabajo en forma de código fuente es el mismo trabajo.
 
-  The Corresponding Source need not include anything that users can regenerate automatically from other parts of the Corresponding Source.
-  The Corresponding Source for a work in source code form is that same work.
+5. "El autor" se refiere al "autor" del código, que es el que hizo el código particular que existe dentro de
+   la fuente correspondiente.
 
-5. "The author" refers to "author" of the code, which is the one that made the particular code which exists inside of 
-   the Corresponding Source.
+6. "Propietario" se refiere a cualquier parte que se haya convertido en la forma inicial de la Fuente correspondiente.
 
-6. "Owner" refers to any parties which is made the early form of the Corresponding Source.
+     A-2. TÉRMINOS Y CONDICIONES DE COPIA, DISTRIBUCIÓN Y MODIFICACIÓN
 
-     A-2. TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
+0. Debe entregar a cualquier otro destinatario de la Obra o de las Obras derivadas una copia de esta Licencia; y
 
-0. You must give any other recipients of the Work or Derivative Works a copy of this License; and
+1. Debe hacer que los archivos modificados lleven avisos destacados que indiquen que ha cambiado los archivos; y
 
-1. You must cause any modified files to carry prominent notices stating that You changed the files; and
+2. Debe conservar, en la forma de origen de cualquier Trabajo derivado que distribuya,
+   esta licencia, todos los derechos de autor, patentes, marcas comerciales, autoría y avisos de atribución
+   de la forma Fuente del Trabajo; y
 
-2. You must retain, in the Source form of any Derivative Works that You distribute, 
-   this license, all copyright, patent, trademark, authorships and attribution notices 
-   from the Source form of the Work; and
+3. Respetar al autor y propietario de las obras que se distribuyan de cualquier forma.
 
-3. Respecting the author and owner of works that are distributed in any way.
+ Puede agregar su propia declaración de derechos de autor a sus modificaciones y puede proporcionar
+términos y condiciones de licencia adicionales o diferentes para uso, reproducción,
+o distribución de sus modificaciones, o para cualquier obra derivada en su conjunto,
+siempre que su uso, reproducción y distribución del Trabajo cumpla
+con las condiciones establecidas en esta Licencia.
 
- You may add Your own copyright statement to Your modifications and may provide 
-additional or different license terms and conditions for use, reproduction, 
-or distribution of Your modifications, or for any such Derivative Works as a whole, 
-provided Your use, reproduction, and distribution of the Work otherwise complies 
-with the conditions stated in this License.
-
-                        B. DISCLAIMER OF WARRANTY
+                        B. RENUNCIA DE GARANTÍA
                         
-  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR 
-IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND 
-FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS 
-BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
-OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ESTE SOFTWARE ES PROPORCIONADO POR LOS REGENTES Y COLABORADORES `` TAL CUAL '' Y CUALQUIER EXPRESA O
+GARANTÍAS IMPLÍCITAS, INCLUIDAS, PERO NO LIMITADAS A LAS GARANTÍAS IMPLÍCITAS DE COMERCIABILIDAD Y
+SE RECHAZA LA APTITUD PARA UN PROPÓSITO EN PARTICULAR. EN NINGÚN CASO LOS REGENTES O COLABORADORES
+SER RESPONSABLE DE CUALQUIER DAÑO DIRECTO, INDIRECTO, INCIDENTAL, ESPECIAL, EJEMPLAR O CONSECUENTE
+(INCLUYENDO, PERO NO LIMITADO A, ADQUISICIÓN DE BIENES O SERVICIOS SUSTITUTOS; PÉRDIDA DE USO, DATOS,
+O BENEFICIOS; O INTERRUPCIÓN COMERCIAL) SIN EMBARGO Y SOBRE CUALQUIER TEORÍA DE RESPONSABILIDAD, YA SEA EN
+CONTRATO, RESPONSABILIDAD ESTRICTA O AGRAVIO (INCLUYENDO NEGLIGENCIA O DE OTRO MODO) QUE SURJAN DE CUALQUIER FORMA
+DEL USO DE ESTE SOFTWARE, INCLUSO SI SE ADVIERTE DE LA POSIBILIDAD DE DICHO DAÑO.
 
 
-                   C. REVISED VERSION OF THIS LICENSE
+                   C.VERSIÓN REVISADA DE ESTA LICENCIA
 
-  The Devscapes Open Source Holding GmbH. may publish revised and/or new versions of the 
-Raphielscape Public License from time to time.  Such new versions will be similar in spirit 
-to the present version, but may differ in detail to address new problems or concerns.
+  Devscapes Open Source Holding GmbH. puede publicar versiones revisadas y / o nuevas del
+Licencia pública Raphielscape de vez en cuando. Estas nuevas versiones serán similares en espíritu
+a la versión actual, pero pueden diferir en detalles para abordar nuevos problemas o inquietudes.
 
-  Each version is given a distinguishing version number.  If the Program specifies that a 
-certain numbered version of the Raphielscape Public License "or any later version" applies to it, 
-you have the option of following the terms and conditions either of that numbered version or of 
-any later version published by the Devscapes Open Source Holding GmbH.  If the Program does not specify a 
-version number of the Raphielscape Public License, you may choose any version ever published
-by the Devscapes Open Source Holding GmbH.
+  A cada versión se le asigna un número de versión distintivo. Si el Programa especifica que un
+se le aplica cierta versión numerada de la licencia pública Raphielscape "o cualquier versión posterior",
+tiene la opción de seguir los términos y condiciones de esa versión numerada o de
+cualquier versión posterior publicada por Devscapes Open Source Holding GmbH. Si el Programa no especifica un
+número de versión de la licencia pública Raphielscape, puede elegir cualquier versión publicada
+por Devscapes Open Source Holding GmbH.
 
-                             END OF LICENSE
+                             FIN DE LICENCIA
