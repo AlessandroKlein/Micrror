@@ -17,7 +17,7 @@ class MyLogger:
     def debug(self, msg):
         LOGGER.debug(msg)
         # Hack to fix changing changing extension
-        match = re.search(r'.ffmpeg..Merging formats into..(.*?).$', msg)
+        match = re.search(r'.ffmpeg..Fusionar formatos en..(.*?).$', msg)
         if match and not self.obj.is_playlist:
             newname = match.group(1)
             newname = newname.split("/")
@@ -67,7 +67,7 @@ class YoutubeDLHelper(DownloadHelper):
 
     def __onDownloadProgress(self, d):
         if self.is_cancelled:
-            raise ValueError("Cancelling Download..")
+            raise ValueError("Cancelar descarga..")
         if d['status'] == "finished":
             if self.is_playlist:
                 self.last_downloaded = 0
@@ -147,8 +147,8 @@ class YoutubeDLHelper(DownloadHelper):
                     return
             self.__onDownloadComplete()
         except ValueError:
-            LOGGER.info("Download Cancelled by User!")
-            self.onDownloadError("Download Cancelled by User!")
+            LOGGER.info("Descarga cancelada por el usuario!")
+            self.onDownloadError("Descarga cancelada por el usuario!")
 
     def add_download(self, link, path, qual, name):
         pattern = '^.*(youtu\.be\/|youtube.com\/)(playlist?)'
