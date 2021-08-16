@@ -46,7 +46,7 @@ class qbittorrent:
                 self.ext_hash = get_hash_magnet(link)
             tor_info = self.client.torrents_info(torrent_hashes=self.ext_hash)
             if len(tor_info) > 0:
-                sendMessage("This torrent is already in list.", listener.bot, listener.update)
+                sendMessage("Este torrent ya está en la lista.", listener.bot, listener.update)
                 return
             if is_file:
                 op = self.client.torrents_add(torrent_files=[link], save_path=dire)
@@ -54,18 +54,18 @@ class qbittorrent:
             else:
                 op = self.client.torrents_add(link, save_path=dire)
             if op.lower() == "ok.":
-                LOGGER.info(f"QbitDownload started: {self.ext_hash}")
+                LOGGER.info(f"QbitDownload comenzó: {self.ext_hash}")
                 tor_info = self.client.torrents_info(torrent_hashes=self.ext_hash)
                 if len(tor_info) == 0:
                     while True:
                         if time.time() - self.meta_time >= 300:
-                            sendMessage("The torrent was not added. report when u see this error", listener.bot, listener.update)
+                            sendMessage("No se agregó el torrente. informe cuando vea este error", listener.bot, listener.update)
                             return False
                         tor_info = self.client.torrents_info(torrent_hashes=self.ext_hash)
                         if len(tor_info) > 0:
                             break
             else:
-                sendMessage("This is an unsupported/invalid link.", listener.bot, listener.update)
+                sendMessage("Este es un enlace no admitido/inválido.", listener.bot, listener.update)
                 return
             gid = ''.join(random.SystemRandom().choices(string.ascii_letters + string.digits, k=14))
             with download_dict_lock:
@@ -74,7 +74,7 @@ class qbittorrent:
             tor_info = tor_info[0]
             if BASE_URL is not None and qbitsel:
                 if not is_file and (tor_info.state == "checkingResumeData" or tor_info.state == "metaDL"):
-                    meta = sendMessage("Downloading Metadata...Please wait then you can select files or mirror torrent file if it have low seeders", listener.bot, listener.update)
+                    meta = sendMessage("Descargando metadatos... Espere, luego puede seleccionar archivos o duplicar el archivo torrent si tiene pocas semillas", listener.bot, listener.update)
                     while True:
                             tor_info = self.client.torrents_info(torrent_hashes=self.ext_hash)
                             if len(tor_info) == 0:
@@ -100,7 +100,7 @@ class qbittorrent:
                 buttons.sbutton("Pincode", pindata)
                 buttons.sbutton("Done Selecting", donedata)
                 QBBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
-                msg = "Your download paused. Choose files then press Done Selecting button to start downloading."
+                msg = "Tu descarga se detuvo. Elija archivos y luego presione el botón de selección finalizado para comenzar a descargar."
                 markup = sendMarkup(msg, listener.bot, listener.update, QBBUTTONS)
                 self.client.torrents_pause(torrent_hashes=self.ext_hash)
                 with download_dict_lock:
@@ -110,7 +110,7 @@ class qbittorrent:
                 sendStatusMessage(listener.update, listener.bot)
         except qba.UnsupportedMediaType415Error as e:
             LOGGER.error(str(e))
-            sendMessage("This is an unsupported/invalid link. {str(e)}", listener.bot, listener.update)
+            sendMessage("Este es un enlace no admitido/inválido. {str(e)}", listener.bot, listener.update)
         except Exception as e:
             LOGGER.error(str(e))
             sendMessage(str(e), listener.bot, listener.update)
@@ -127,12 +127,12 @@ class qbittorrent:
         if tor_info.state == "metaDL":
             if time.time() - self.meta_time > 600:
                 self.client.torrents_delete(torrent_hashes=self.ext_hash)
-                self.listener.onDownloadError("Dead Torrent!")
+                self.listener.onDownloadError("Torrent muerto!")
                 self.updater.cancel()
                 return
         elif tor_info.state == "error":
             self.client.torrents_delete(torrent_hashes=self.ext_hash)
-            self.listener.onDownloadError("Error. IDK why, report in support group")
+            self.listener.onDownloadError("Error. IDK por qué, informar en el grupo de apoyo")
             self.updater.cancel()
             return
         elif tor_info.state == "uploading" or tor_info.state.lower().endswith("up"):
@@ -150,7 +150,7 @@ def get_confirm(update, context):
     qdl = getDownloadByGid(data[1])
     if qdl is not None:
         if user_id != qdl.listener.message.from_user.id:
-            query.answer(text="Don't waste your time!", show_alert=True)
+            query.answer(text="No pierdas tu tiempo!", show_alert=True)
             return
         if data[0] == "pin":
             query.answer(text=data[2], show_alert=True)
@@ -160,7 +160,7 @@ def get_confirm(update, context):
             sendStatusMessage(qdl.listener.update, qdl.listener.bot)
             deleteMessage(context.bot, qdl.markup)
     else:
-        query.answer(text="This task has been cancelled!", show_alert=True)
+        query.answer(text="Esta tarea ha sido cancelada!", show_alert=True)
         query.delete_message()
 
 
@@ -173,12 +173,12 @@ def get_hash_magnet(mgt):
     v = qs.get('xt', None)
     
     if v == None or v == []:
-        LOGGER.error('Invalid magnet URI: no "xt" query parameter.')
+        LOGGER.error('URI de imán no válido: no "xt" parámetro de consulta.')
         return False
         
     v = v[0]
     if not v.startswith('urn:btih:'):
-        LOGGER.error('Invalid magnet URI: "xt" value not valid for BitTorrent.')
+        LOGGER.error('URI de imán no válido: el valor "xt" no es válido para BitTorrent.')
         return False
 
     mgt = v[len('urn:btih:'):]
