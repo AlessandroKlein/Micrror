@@ -16,19 +16,19 @@ async def set_varr(client, message, app_):
     heroku_var = app_.config()
     _var = get_text(message)
     if not _var:
-        await msg_.edit("`Here is Usage Syntax: /setvar KEY VALUE`", parse_mode="markdown")
+        await msg_.edit("`Aquí está la sintaxis de uso: /setvar KEY VALUE`", parse_mode="markdown")
         return
     if not " " in _var:
-        await msg_.edit("`Variable VALUE needed !`", parse_mode="markdown")
+        await msg_.edit("`Se necesita una variable VALUE !`", parse_mode="markdown")
         return
     var_ = _var.split(" ", 1)
     if len(var_) > 2:
-        await msg_.edit("`Here is Usage Syntax: /setvar KEY VALUE`", parse_mode="markdown")
+        await msg_.edit("`Aquí está la sintaxis de uso: /setvar KEY VALUE`", parse_mode="markdown")
         return
     _varname, _varvalue = var_
     await msg_.edit(
-        f"`Variable {_varname} Added With Value {_varvalue}!`" \
-        f"\nYour Heroku app will restart. Be patient."
+        f"`Variable {_varname} Agregado con valor {_varvalue}!`" \
+        f"\nSu aplicación Heroku se reiniciará. Ser paciente."
     )
     heroku_var[_varname] = _varvalue
 
@@ -37,37 +37,37 @@ async def set_varr(client, message, app_):
 @app.on_message(filters.command(['delvar', f'delvar@{bot.username}']) & filters.user(OWNER_ID))
 @check_heroku
 async def del_varr(client, message, app_):
-    msg_ = await message.reply_text("`Please Wait!`", parse_mode="markdown")
+    msg_ = await message.reply_text("`Espere por favor!`", parse_mode="markdown")
     heroku_var = app_.config()
     _var = get_text(message)
     if not _var:
-        await msg_.edit("`Give Var Name As Input!`", parse_mode="markdown")
+        await msg_.edit("`Dar nombre de var como entrada!`", parse_mode="markdown")
         return
     if not _var in heroku_var:
-        await msg_.edit("`This Var Doesn't Exists!`", parse_mode="markdown")
+        await msg_.edit("`Este var no existe!`", parse_mode="markdown")
         return
     await msg_.edit(
-        f"`Sucessfully Deleted {_var} Var!`" \
-        f"\nYour Heroku app will restart. Be patient.",
+        f"`Eliminado exitosamente {_var} Var!`" \
+        f"\nSu aplicación Heroku se reiniciará. Ser paciente.",
         parse_mode="markdown")
     del heroku_var[_var]
 
 @app.on_message(filters.command(['reboot', f'reboot@{bot.username}']) & filters.user(OWNER_ID))
 @check_heroku
 async def gib_restart(client, message, hap):
-    msg_ = await message.reply_text("[HEROKU] - Restarting")
+    msg_ = await message.reply_text("[HEROKU] - Reiniciando")
     hap.restart()
 
 # CONFIG LIST #
 
-__header__='📕 **Page** **{}**\n\n'
+__header__='📕 **Página** **{}**\n\n'
 
 @app.on_message(filters.command([BotCommands.ConfigMenuCommand, f'{BotCommands.ConfigMenuCommand}@{bot.username}']) & filters.user(OWNER_ID))
 async def config_menu(_, message):
     await message.reply(
-        f"**Hello {message.from_user.mention}**,\n\n**If you want to add or set Variable in Heroku use** `/setvar`\n\n**If you want to delete Variable in Heroku use `/delvar`**\n\n**WARNING! Very Recommended to do this command in private since it's contain Bot info.**\n\n**Here's This is Slam-MirrorBot Current Configs**",
+        f"**Hello {message.from_user.mention}**,\n\n**Si desea agregar o establecer una variable en Heroku, use** `/setvar`\n\n**Si desea eliminar Variable en Heroku use `/delvar`**\n\n**ADVERTENCIA! Muy recomendado para hacer este comando en privado ya que contiene información del Bot.**\n\n**Aquí está esta es la configuración actual de Slam-MirrorBot**",
         reply_markup=types.InlineKeyboardMarkup(
-            [[types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'), types.InlineKeyboardButton(f"BOT CONFIG", callback_data='docs_1')]]
+            [[types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'), types.InlineKeyboardButton(f"CONFIGURAR BOT", callback_data='docs_1')]]
         )
     )
 
@@ -77,7 +77,7 @@ async def config_button(_, query):
     if data == '1':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Telegram Config ]**\n\n**BOT_TOKEN:** `{BOT_TOKEN}`\n\n**TELEGRAM_API:** `{TELEGRAM_API}`\n\n**TELEGRAM_HASH:** `{TELEGRAM_HASH}`\n\n**TELEGRAPH_TOKEN:** `{telegraph_token}`",
+            + f"**[ Configuración de Telegram ]**\n\n**BOT_TOKEN:** `{BOT_TOKEN}`\n\n**TELEGRAM_API:** `{TELEGRAM_API}`\n\n**TELEGRAM_HASH:** `{TELEGRAM_HASH}`\n\n**TELEGRAPH_TOKEN:** `{telegraph_token}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -91,7 +91,7 @@ async def config_button(_, query):
     elif data == '2':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Drive and Index Config ]**\n\n**GDRIVE_FOLDER_ID:** `{parent_id}`\n\n**IS_TEAM_DRIVE:** `{IS_TEAM_DRIVE}`\n\n**USE_SERVICE_ACCOUNTS:** `{USE_SERVICE_ACCOUNTS}`\n\n**INDEX_URL:** `{INDEX_URL}`",
+            + f"**[ Configuración de índice y unidad ]**\n\n**GDRIVE_FOLDER_ID:** `{parent_id}`\n\n**IS_TEAM_DRIVE:** `{IS_TEAM_DRIVE}`\n\n**USE_SERVICE_ACCOUNTS:** `{USE_SERVICE_ACCOUNTS}`\n\n**INDEX_URL:** `{INDEX_URL}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -105,7 +105,7 @@ async def config_button(_, query):
     elif data == '3':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Mega and Uptobox Config ]**\n\n**MEGA_API_KEY:** `{MEGA_API_KEY}`\n\n**MEGA_EMAIL_ID:** `{MEGA_EMAIL_ID}`\n\n**MEGA_PASSWORD:** `{MEGA_PASSWORD}`\n\n**UPTOBOX_TOKEN:** `{UPTOBOX_TOKEN}`",
+            + f"**[ Configuración de Mega y Uptobox ]**\n\n**MEGA_API_KEY:** `{MEGA_API_KEY}`\n\n**MEGA_EMAIL_ID:** `{MEGA_EMAIL_ID}`\n\n**MEGA_PASSWORD:** `{MEGA_PASSWORD}`\n\n**UPTOBOX_TOKEN:** `{UPTOBOX_TOKEN}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -119,7 +119,7 @@ async def config_button(_, query):
     elif data == '4':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Stop and Block Config ]**\n\n**STOP_DUPLICATE:** `{STOP_DUPLICATE}`\n\n**BLOCK_MEGA_FOLDER:** `{BLOCK_MEGA_FOLDER}`\n\n**BLOCK_MEGA_LINKS:** `{BLOCK_MEGA_LINKS}`",
+            + f"**[ Detener y bloquear la configuración ]**\n\n**STOP_DUPLICATE:** `{STOP_DUPLICATE}`\n\n**BLOCK_MEGA_FOLDER:** `{BLOCK_MEGA_FOLDER}`\n\n**BLOCK_MEGA_LINKS:** `{BLOCK_MEGA_LINKS}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -133,7 +133,7 @@ async def config_button(_, query):
     elif data == '5':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Limit Size Config ]**\n\n**TORRENT_DIRECT_LIMIT:** `{TORRENT_DIRECT_LIMIT}`\n\n**TAR_UNZIP_LIMIT:** `{TAR_UNZIP_LIMIT}`\n\n**CLONE_LIMIT:** `{CLONE_LIMIT}`\n\n**MEGA_LIMIT:** `{MEGA_LIMIT}`",
+            + f"**[ Configuración de tamaño límite ]**\n\n**TORRENT_DIRECT_LIMIT:** `{TORRENT_DIRECT_LIMIT}`\n\n**TAR_UNZIP_LIMIT:** `{TAR_UNZIP_LIMIT}`\n\n**CLONE_LIMIT:** `{CLONE_LIMIT}`\n\n**MEGA_LIMIT:** `{MEGA_LIMIT}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -150,7 +150,7 @@ async def config_button(_, query):
         sudo += '\n'.join(str(id) for id in SUDO_USERS)
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ User ID Config ]**\n\n**OWNER_ID:** `{OWNER_ID}`\n\n**AUTHORIZED_CHATS:**\n`{user}`\n\n**SUDO_USERS:**\n`{sudo}`",
+            + f"**[ Configuración de ID de usuario ]**\n\n**OWNER_ID:** `{OWNER_ID}`\n\n**AUTHORIZED_CHATS:**\n`{user}`\n\n**SUDO_USERS:**\n`{sudo}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -164,7 +164,7 @@ async def config_button(_, query):
     elif data == '7':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Button Config ]**\n\n**BUTTON_FOUR_NAME:** `{BUTTON_FOUR_NAME}`\n\n**BUTTON_FOUR_URL:** `{BUTTON_FOUR_URL}`\n\n**BUTTON_FIVE_NAME:** `{BUTTON_FIVE_NAME}`\n\n**BUTTON_FIVE_URL:** `{BUTTON_FIVE_URL}`\n\n**BUTTON_SIX_NAME:** `{BUTTON_SIX_NAME}`\n\n**BUTTON_SIX_URL:** `{BUTTON_SIX_URL}`",
+            + f"**[ Configuración del botón ]**\n\n**BUTTON_FOUR_NAME:** `{BUTTON_FOUR_NAME}`\n\n**BUTTON_FOUR_URL:** `{BUTTON_FOUR_URL}`\n\n**BUTTON_FIVE_NAME:** `{BUTTON_FIVE_NAME}`\n\n**BUTTON_FIVE_URL:** `{BUTTON_FIVE_URL}`\n\n**BUTTON_SIX_NAME:** `{BUTTON_SIX_NAME}`\n\n**BUTTON_SIX_URL:** `{BUTTON_SIX_URL}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -178,7 +178,7 @@ async def config_button(_, query):
     elif data == '8':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Heroku Config ]**\n\n**HEROKU_API_KEY:** `{HEROKU_API_KEY}`\n\n**HEROKU_APP_NAME:** `{HEROKU_APP_NAME}`\n\n**[ Shortener Config ]**\n\n**SHORTENER:** `{SHORTENER}`\n\n**SHORTENER_API:** `{SHORTENER_API}`",
+            + f"**[ Configuración de Heroku ]**\n\n**HEROKU_API_KEY:** `{HEROKU_API_KEY}`\n\n**HEROKU_APP_NAME:** `{HEROKU_APP_NAME}`\n\n**[ Shortener Config ]**\n\n**SHORTENER:** `{SHORTENER}`\n\n**SHORTENER_API:** `{SHORTENER_API}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
@@ -192,7 +192,7 @@ async def config_button(_, query):
     elif data == '9':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Others Config ]**\n\n**VIEW_LINK:** `{VIEW_LINK}`\n\n**STATUS_LIMIT:** `{STATUS_LIMIT}`\n\n**DOWNLOAD_STATUS_UPDATE_INTERVAL:** `{DOWNLOAD_STATUS_UPDATE_INTERVAL}`\n\n**IGNORE_PENDING_REQUESTS:** `{IGNORE_PENDING_REQUESTS}`\n\n**AUTO_DELETE_MESSAGE_DURATION:** `{AUTO_DELETE_MESSAGE_DURATION}`\n\n**DOWNLOAD_DIR:** `{DOWNLOAD_DIR}`\n\n**DATABASE_URL:** `{DB_URI}`",
+            + f"**[ Otros Config ]**\n\n**VIEW_LINK:** `{VIEW_LINK}`\n\n**STATUS_LIMIT:** `{STATUS_LIMIT}`\n\n**DOWNLOAD_STATUS_UPDATE_INTERVAL:** `{DOWNLOAD_STATUS_UPDATE_INTERVAL}`\n\n**IGNORE_PENDING_REQUESTS:** `{IGNORE_PENDING_REQUESTS}`\n\n**AUTO_DELETE_MESSAGE_DURATION:** `{AUTO_DELETE_MESSAGE_DURATION}`\n\n**DOWNLOAD_DIR:** `{DOWNLOAD_DIR}`\n\n**DATABASE_URL:** `{DB_URI}`",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [
