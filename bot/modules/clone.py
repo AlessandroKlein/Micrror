@@ -20,18 +20,18 @@ def cloneNode(update, context):
             sendMessage(res, context.bot, update)
             return
         if STOP_DUPLICATE:
-            LOGGER.info(f"Checking File/Folder if already in Drive...")
+            LOGGER.info(f"Comprobación de archivo/Crpeta si ya está en Drive...")
             smsg, button = gd.drive_list(name)
             if smsg:
-                msg3 = "File/Folder is already available in Drive.\nHere are the search results:"
+                msg3 = "El archivo/carpeta ya está disponible en Drive.\nAquí están los resultados de la búsqueda:"
                 sendMarkup(msg3, context.bot, update, button)
                 return
         if CLONE_LIMIT is not None:
-            LOGGER.info(f"Checking File/Folder Size...")
+            LOGGER.info(f"Comprobación del tamaño de archivo/carpeta...")
             limit = CLONE_LIMIT
             limit = limit.split(' ', maxsplit=1)
             limitint = int(limit[0])
-            msg2 = f'Failed, Clone limit is {CLONE_LIMIT}.\nYour File/Folder size is {get_readable_file_size(clonesize)}.'
+            msg2 = f'Error, el límite de clonación es {CLONE_LIMIT}.\nEl tamaño de su archivo/carpeta es {get_readable_file_size(clonesize)}.'
             if 'G' in limit[1] or 'g' in limit[1]:
                 if clonesize > limitint * 1024**3:
                     sendMessage(msg2, context.bot, update)
@@ -41,7 +41,7 @@ def cloneNode(update, context):
                     sendMessage(msg2, context.bot, update)
                     return              
         if files < 15:
-            msg = sendMessage(f"Cloning: <code>{link}</code>", context.bot, update)
+            msg = sendMessage(f"Clonación: <code>{link}</code>", context.bot, update)
             result, button = gd.clone(link)
             deleteMessage(context.bot, msg)
         else:
@@ -76,7 +76,7 @@ def cloneNode(update, context):
         else:
             sendMarkup(result + cc, context.bot, update, button)
     else:
-        sendMessage('Provide G-Drive Shareable Link to Clone.', context.bot, update)
+        sendMessage('Proporcionar un enlace compartible de G-Drive para clonar.', context.bot, update)
 
 clone_handler = CommandHandler(BotCommands.CloneCommand, cloneNode, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 dispatcher.add_handler(clone_handler)
