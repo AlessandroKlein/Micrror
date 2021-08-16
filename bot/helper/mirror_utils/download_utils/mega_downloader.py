@@ -35,12 +35,12 @@ class MegaAppListener(MegaListener):
 
     @property
     def speed(self):
-        """Returns speed of the download in bytes/second"""
+        """Devuelve la velocidad de descarga en bytes/segundo"""
         return self.__speed
 
     @property
     def name(self):
-        """Returns name of the download"""
+        """Devuelve el nombre de la descarga."""
         return self.__name
 
     def setValues(self, name, size, gid):
@@ -50,7 +50,7 @@ class MegaAppListener(MegaListener):
 
     @property
     def size(self):
-        """Size of download in bytes"""
+        """Tamaño de descarga en bytes"""
         return self.__size
 
     @property
@@ -70,14 +70,14 @@ class MegaAppListener(MegaListener):
         elif request_type == MegaRequest.TYPE_GET_PUBLIC_NODE:
             self.public_node = request.getPublicMegaNode()
         elif request_type == MegaRequest.TYPE_FETCH_NODES:
-            LOGGER.info("Fetching Root Node.")
+            LOGGER.info("Obteniendo nodo raíz.")
             self.node = api.getRootNode()
-            LOGGER.info(f"Node Name: {self.node.getName()}")
+            LOGGER.info(f"Nombre del nodo: {self.node.getName()}")
         if request_type not in self._NO_EVENT_ON or self.node and "cloud drive" not in self.node.getName().lower():
             self.continue_event.set()
 
     def onRequestTemporaryError(self, api, request, error: MegaError):
-        LOGGER.info(f'Mega Request error in {error}')
+        LOGGER.info(f'Error de mega solicitud en {error}')
         if not self.is_cancelled:
             self.listener.onDownloadError("RequestTempError: " + error.toString())
             self.is_cancelled = True
@@ -105,7 +105,7 @@ class MegaAppListener(MegaListener):
         filen = transfer.getFileName()
         state = transfer.getState()
         errStr = error.toString()
-        LOGGER.info(f'Mega download error in file {transfer} {filen}: {error}')
+        LOGGER.info(f'Error de mega descarga en el archivo {transfer} {filen}: {error}')
 
         if state == 1 or state == 4:
             # Sometimes MEGA (offical client) can't stream a node either and raises a temp failed error.
@@ -119,7 +119,7 @@ class MegaAppListener(MegaListener):
 
     def cancel_download(self):
         self.is_cancelled = True
-        self.listener.onDownloadError("Download Canceled by user")
+        self.listener.onDownloadError("Descargar cancelado por el usuario")
 
 
 class AsyncExecutor:
@@ -142,7 +142,7 @@ class MegaDownloadHelper:
     @new_thread
     def add_download(mega_link: str, path: str, listener):
         if MEGA_API_KEY is None:
-            raise MegaDownloaderException('Mega API KEY not provided! Cannot mirror Mega links')
+            raise MegaDownloaderException('¡Mega CLAVE API no incluida! No se pueden duplicar los enlaces Mega')
         executor = AsyncExecutor()
         api = MegaApi(MEGA_API_KEY, None, None, 'telegram-mirror-bot')
         global listeners
@@ -153,11 +153,11 @@ class MegaDownloadHelper:
             executor.do(api.login, (MEGA_EMAIL_ID, MEGA_PASSWORD))
         link_type = get_mega_link_type(mega_link)
         if link_type == "file":
-            LOGGER.info("File. If your download didn't start, then check your link if it's available to download")
+            LOGGER.info("Archivo. Si la descarga no se inició, verifique su enlace si está disponible para descargar")
             executor.do(api.getPublicNode, (mega_link,))
             node = mega_listener.public_node
         else:
-            LOGGER.info("Folder. If your download didn't start, then check your link if it's available to download")
+            LOGGER.info("Carpeta. Si la descarga no se inició, verifique su enlace si está disponible para descargar")
             folder_api = MegaApi(MEGA_API_KEY,None,None,'TgBot')
             folder_api.addListener(mega_listener)
             executor.do(folder_api.loginToFolder, (mega_link,))
@@ -165,7 +165,7 @@ class MegaDownloadHelper:
         if mega_listener.error is not None:
             return listener.onDownloadError(str(mega_listener.error))
         if STOP_DUPLICATE:
-            LOGGER.info(f'Checking File/Folder if already in Drive')
+            LOGGER.info(f'Comprobación de archivo/carpeta si ya está en Drive')
             mname = node.getName()
             if listener.isTar:
                 mname = mname + ".tar"
@@ -175,19 +175,19 @@ class MegaDownloadHelper:
                 gd = GoogleDriveHelper()
                 smsg, button = gd.drive_list(mname)
             if smsg:
-                msg1 = "File/Folder is already available in Drive.\nHere are the search results:"
+                msg1 = "File/La carpeta ya está disponible en Drive.\nAquí están los resultados de la búsqueda:"
                 sendMarkup(msg1, listener.bot, listener.update, button)
                 executor.continue_event.set()
                 return
         if MEGA_LIMIT is not None or TAR_UNZIP_LIMIT is not None:
             limit = None
-            LOGGER.info(f'Checking File/Folder Size')
+            LOGGER.info(f'Comprobación del tamaño de archivo / carpeta')
             if TAR_UNZIP_LIMIT is not None and (listener.isTar or listener.extract):
                 limit = TAR_UNZIP_LIMIT
-                msg3 = f'Failed, Tar/Unzip limit is {TAR_UNZIP_LIMIT}.\nYour File/Folder size is {get_readable_file_size(api.getSize(node))}.'
+                msg3 = f'Error, el límite de alquitrán/descomprimir es {TAR_UNZIP_LIMIT}.\nEl tamaño de su archivo/carpeta es {get_readable_file_size(api.getSize(node))}.'
             elif MEGA_LIMIT is not None and limit is None:
                 limit = MEGA_LIMIT
-                msg3 = f'Failed, Mega limit is {MEGA_LIMIT}.\nYour File/Folder size is {get_readable_file_size(api.getSize(node))}.'
+                msg3 = f'Falló, el mega límite es {MEGA_LIMIT}.\nEl tamaño de su archivo/carpeta es {get_readable_file_size(api.getSize(node))}.'
             if limit is not None:
                 limit = limit.split(' ', maxsplit=1)
                 limitint = int(limit[0])
