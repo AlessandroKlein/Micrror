@@ -7,7 +7,7 @@ from telegram.ext import CommandHandler
 
 
 def speedtest(update, context):
-    speed = sendMessage("Running Speed Test . . . ", context.bot, update)
+    speed = sendMessage("Prueba de velocidad de funcionamiento . . . ", context.bot, update)
     test = Speedtest()
     test.get_best_server()
     test.download()
@@ -31,7 +31,7 @@ def speedtest(update, context):
 
 
 def speed_convert(size):
-    """Hi human, you can't read bytes?"""
+    """Hola humano, no puedes leer bytes?"""
     power = 2 ** 10
     zero = 0
     units = {0: "", 1: "Kb/s", 2: "MB/s", 3: "Gb/s", 4: "Tb/s"}
