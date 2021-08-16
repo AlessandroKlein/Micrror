@@ -21,7 +21,7 @@ class MegaDownloadStatus(Status):
             return 0.0
 
     def progress(self):
-        """Progress of download in percentage"""
+        """Progreso de descarga en porcentaje"""
         return f"{self.progress_raw()}%"
 
     def status(self) -> str:
